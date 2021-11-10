@@ -112,8 +112,8 @@ func (app *localClient) CheckTxAsync(req types.RequestCheckTx, cb ResponseCallba
 }
 
 func (app *localClient) QueryAsync(req types.RequestQuery, cb ResponseCallback) *ReqRes {
-	app.mtx.Lock()
-	defer app.mtx.Unlock()
+	// app.mtx.Lock()
+	// defer app.mtx.Unlock()
 
 	reqRes := NewReqRes(types.ToRequestQuery(req), cb)
 	res := app.Application.Query(req)
@@ -259,8 +259,8 @@ func (app *localClient) CheckTxSync(req types.RequestCheckTx) (*types.ResponseCh
 }
 
 func (app *localClient) QuerySync(req types.RequestQuery) (*types.ResponseQuery, error) {
-	app.mtx.Lock()
-	defer app.mtx.Unlock()
+	// app.mtx.Lock()
+	// defer app.mtx.Unlock()
 
 	res := app.Application.Query(req)
 	return &res, nil
