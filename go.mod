@@ -21,7 +21,7 @@ require (
 	github.com/google/orderedcode v0.0.1
 	github.com/gorilla/websocket v1.4.2
 	github.com/gtank/merlin v0.1.1
-	github.com/herumi/bls-eth-go-binary v0.0.0-20200923072303-32b29e5d8cbf
+	github.com/herumi/bls-eth-go-binary v0.0.0-20220216073600-600054663ec1
 	github.com/lib/pq v1.2.0
 	github.com/libp2p/go-buffer-pool v0.0.2
 	github.com/line/tm-db/v2 v2.0.0-init.1.0.20210824011847-fcfa67dd3c70
