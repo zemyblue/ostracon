@@ -136,9 +136,9 @@ func (blockExec *BlockExecutor) CreateProposalBlock(
 	// Fetch a limited amount of valid txs
 	maxDataBytes := types.MaxDataBytes(maxBytes, commit, evidence)
 
-	blockExec.logger.Debug("mempool size:", blockExec.mempool.Size(), "maxGas", maxGas, "maxTxs", maxTxs)
+	blockExec.logger.Debug(fmt.Sprintf("mempool size: %d, maxGas: %d, maxTxs: %d", blockExec.mempool.Size(), maxGas, maxTxs))
 	txs := blockExec.mempool.ReapMaxBytesMaxGasMaxTxs(maxDataBytes, maxGas, maxTxs)
-	blockExec.logger.Debug("txs count:", len(txs))
+	blockExec.logger.Debug(fmt.Sprintf("txs count: %d", len(txs)))
 
 	return state.MakeBlock(height, txs, commit, evidence, proposerAddr, round, proof)
 }
