@@ -628,6 +628,7 @@ func (mem *CListMempool) ReapMaxBytesMaxGasMaxTxs(maxBytes, maxGas, maxTxs int64
 	if maxTxs <= 0 {
 		maxTxs = int64(mem.txs.Len())
 	}
+	mem.logger.Debug(fmt.Sprintf("maxTxs:%d", maxTxs))
 
 	// TODO: we will get a performance boost if we have a good estimate of avg
 	// size per tx, and set the initial capacity based off of that.
@@ -638,6 +639,7 @@ func (mem *CListMempool) ReapMaxBytesMaxGasMaxTxs(maxBytes, maxGas, maxTxs int64
 		memTx := e.Value.(*mempoolTx)
 
 		protoTxs.Txs = append(protoTxs.Txs, memTx.tx)
+		mem.logger.Debug(fmt.Sprintf("txs: %d(maxTxs:%d), size:%d(maxBytes:%d)", len(txs), maxTxs, protoTxs.Size(), maxBytes))
 		// Check total size requirement
 		if maxBytes > -1 && int64(protoTxs.Size()) > maxBytes {
 			return txs
@@ -647,6 +649,7 @@ func (mem *CListMempool) ReapMaxBytesMaxGasMaxTxs(maxBytes, maxGas, maxTxs int64
 		// Since newTotalGas < masGas, which
 		// must be non-negative, it follows that this won't overflow.
 		newTotalGas := totalGas + memTx.gasWanted
+		mem.logger.Debug(fmt.Sprintf("newTotalGas:%d = totalGas:%d, memTx.gasWanted:%d", newTotalGas, totalGas, memTx.gasWanted))
 		if maxGas > -1 && newTotalGas > maxGas {
 			return txs
 		}
