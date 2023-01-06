@@ -15,6 +15,8 @@ import (
 
 	"github.com/spf13/cobra"
 
+	tmcrypto "github.com/tendermint/tendermint/proto/tendermint/crypto"
+
 	"github.com/line/ostracon/libs/log"
 	tmos "github.com/line/ostracon/libs/os"
 
@@ -27,7 +29,6 @@ import (
 	"github.com/line/ostracon/abci/types"
 	"github.com/line/ostracon/abci/version"
 	"github.com/line/ostracon/crypto/encoding"
-	"github.com/line/ostracon/proto/ostracon/crypto"
 )
 
 // client is a global variable so it can be reused by the console
@@ -109,7 +110,7 @@ type queryResponse struct {
 	Key      []byte
 	Value    []byte
 	Height   int64
-	ProofOps *crypto.ProofOps
+	ProofOps *tmcrypto.ProofOps
 }
 
 func Execute() error {
