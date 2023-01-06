@@ -7,6 +7,8 @@ import (
 	"testing"
 	"time"
 
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+
 	abci "github.com/line/ostracon/abci/types"
 	"github.com/line/ostracon/abci/types/mocks"
 	"github.com/stretchr/testify/mock"
@@ -24,7 +26,6 @@ import (
 	tmrand "github.com/line/ostracon/libs/rand"
 	mempl "github.com/line/ostracon/mempool"
 	p2pmock "github.com/line/ostracon/p2p/mock"
-	tmproto "github.com/line/ostracon/proto/ostracon/types"
 	"github.com/line/ostracon/types"
 )
 

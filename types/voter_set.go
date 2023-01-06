@@ -15,7 +15,7 @@ import (
 	"github.com/line/ostracon/crypto/tmhash"
 	tmmath "github.com/line/ostracon/libs/math"
 	tmrand "github.com/line/ostracon/libs/rand"
-	tmproto "github.com/line/ostracon/proto/ostracon/types"
+	ocproto "github.com/line/ostracon/proto/ostracon/types"
 )
 
 // VoterSet represent a set of *Validator at a given height.
@@ -399,13 +399,13 @@ func verifySignatureOrCollectBlsPubKeysAndGetVotingWeight(
 }
 
 // ToProto converts VoterSet to protobuf
-func (voters *VoterSet) ToProto() (*tmproto.VoterSet, error) {
+func (voters *VoterSet) ToProto() (*ocproto.VoterSet, error) {
 	if voters.IsNilOrEmpty() {
-		return &tmproto.VoterSet{}, nil // validator set should never be nil
+		return &ocproto.VoterSet{}, nil // validator set should never be nil
 	}
 
-	vsp := new(tmproto.VoterSet)
-	votersProto := make([]*tmproto.Validator, len(voters.Voters))
+	vsp := new(ocproto.VoterSet)
+	votersProto := make([]*ocproto.Validator, len(voters.Voters))
 	for i := 0; i < len(voters.Voters); i++ {
 		voterp, err := voters.Voters[i].ToProto()
 		if err != nil {
@@ -422,7 +422,7 @@ func (voters *VoterSet) ToProto() (*tmproto.VoterSet, error) {
 // VoterSetFromProto sets a protobuf VoterSet to the given pointer.
 // It returns an error if any of the validators from the set or the proposer
 // is invalid
-func VoterSetFromProto(vp *tmproto.VoterSet) (*VoterSet, error) {
+func VoterSetFromProto(vp *ocproto.VoterSet) (*VoterSet, error) {
 	if vp == nil {
 		return nil, errors.New("nil voter set") // voter set should never be nil, bigger issues are at play if empty
 	}

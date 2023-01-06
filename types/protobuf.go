@@ -1,6 +1,8 @@
 package types
 
 import (
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+
 	abci "github.com/line/ostracon/abci/types"
 	"github.com/line/ostracon/crypto"
 	"github.com/line/ostracon/crypto/bls"
@@ -8,7 +10,7 @@ import (
 	"github.com/line/ostracon/crypto/ed25519"
 	cryptoenc "github.com/line/ostracon/crypto/encoding"
 	"github.com/line/ostracon/crypto/secp256k1"
-	tmproto "github.com/line/ostracon/proto/ostracon/types"
+	ocproto "github.com/line/ostracon/proto/ostracon/types"
 )
 
 //-------------------------------------------------------
@@ -38,8 +40,8 @@ var OC2PB = oc2pb{}
 
 type oc2pb struct{}
 
-func (oc2pb) Header(header *Header) tmproto.Header {
-	return tmproto.Header{
+func (oc2pb) Header(header *Header) ocproto.Header {
+	return ocproto.Header{
 		Version: header.Version,
 		ChainID: header.ChainID,
 		Height:  header.Height,

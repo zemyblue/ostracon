@@ -6,6 +6,8 @@ import (
 	"sort"
 	"testing"
 
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+
 	"github.com/line/ostracon/crypto/bls"
 	"github.com/line/ostracon/crypto/composite"
 	"github.com/line/ostracon/crypto/ed25519"
@@ -15,7 +17,6 @@ import (
 
 	"github.com/line/ostracon/crypto"
 	tmrand "github.com/line/ostracon/libs/rand"
-	tmproto "github.com/line/ostracon/proto/ostracon/types"
 	tmtime "github.com/line/ostracon/types/time"
 )
 

@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"time"
 
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+
 	"github.com/line/ostracon/crypto"
 	canonictime "github.com/line/ostracon/types/time"
 
@@ -15,7 +17,6 @@ import (
 	"github.com/line/ostracon/libs/log"
 	mempl "github.com/line/ostracon/mempool"
 	tmstate "github.com/line/ostracon/proto/ostracon/state"
-	tmproto "github.com/line/ostracon/proto/ostracon/types"
 	"github.com/line/ostracon/proxy"
 	"github.com/line/ostracon/types"
 )

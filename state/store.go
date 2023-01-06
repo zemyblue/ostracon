@@ -5,13 +5,14 @@ import (
 	"fmt"
 
 	"github.com/gogo/protobuf/proto"
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
 
 	abci "github.com/line/ostracon/abci/types"
 	tmmath "github.com/line/ostracon/libs/math"
 	tmos "github.com/line/ostracon/libs/os"
 	tmstate "github.com/line/ostracon/proto/ostracon/state"
-	tmproto "github.com/line/ostracon/proto/ostracon/types"
+	ocproto "github.com/line/ostracon/proto/ostracon/types"
 	"github.com/line/ostracon/types"
 )
 
@@ -626,7 +627,7 @@ func loadVoterParams(db dbm.DB, height int64) (*types.VoterParams, error) {
 		return nil, errors.New("loadVoterParams: value retrieved from db is empty")
 	}
 
-	v := new(tmproto.VoterParams)
+	v := new(ocproto.VoterParams)
 	err = v.Unmarshal(buf)
 	if err != nil {
 		// DATA HAS BEEN CORRUPTED OR THE SPEC HAS CHANGED

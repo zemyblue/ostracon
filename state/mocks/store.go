@@ -3,8 +3,9 @@
 package mocks
 
 import (
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+
 	ostraconstate "github.com/line/ostracon/proto/ostracon/state"
-	types "github.com/line/ostracon/proto/ostracon/types"
 	state "github.com/line/ostracon/state"
 	ostracontypes "github.com/line/ostracon/types"
 	mock "github.com/stretchr/testify/mock"
@@ -88,14 +89,14 @@ func (_m *Store) LoadABCIResponses(_a0 int64) (*ostraconstate.ABCIResponses, err
 }
 
 // LoadConsensusParams provides a mock function with given fields: _a0
-func (_m *Store) LoadConsensusParams(_a0 int64) (types.ConsensusParams, error) {
+func (_m *Store) LoadConsensusParams(_a0 int64) (tmproto.ConsensusParams, error) {
 	ret := _m.Called(_a0)
 
-	var r0 types.ConsensusParams
-	if rf, ok := ret.Get(0).(func(int64) types.ConsensusParams); ok {
+	var r0 tmproto.ConsensusParams
+	if rf, ok := ret.Get(0).(func(int64) tmproto.ConsensusParams); ok {
 		r0 = rf(_a0)
 	} else {
-		r0 = ret.Get(0).(types.ConsensusParams)
+		r0 = ret.Get(0).(tmproto.ConsensusParams)
 	}
 
 	var r1 error

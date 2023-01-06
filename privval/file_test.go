@@ -9,6 +9,8 @@ import (
 	"testing"
 	"time"
 
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+
 	"github.com/line/ostracon/crypto"
 	tmjson "github.com/line/ostracon/libs/json"
 
@@ -20,7 +22,6 @@ import (
 	"github.com/line/ostracon/crypto/ed25519"
 	"github.com/line/ostracon/crypto/tmhash"
 	tmrand "github.com/line/ostracon/libs/rand"
-	tmproto "github.com/line/ostracon/proto/ostracon/types"
 	"github.com/line/ostracon/types"
 	tmtime "github.com/line/ostracon/types/time"
 )

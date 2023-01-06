@@ -8,11 +8,13 @@ import (
 	"os"
 	"time"
 
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+
 	"github.com/line/ostracon/crypto"
 	tmbytes "github.com/line/ostracon/libs/bytes"
 	tmjson "github.com/line/ostracon/libs/json"
 	tmos "github.com/line/ostracon/libs/os"
-	tmproto "github.com/line/ostracon/proto/ostracon/types"
+	ocproto "github.com/line/ostracon/proto/ostracon/types"
 	tmtime "github.com/line/ostracon/types/time"
 )
 
@@ -177,16 +179,16 @@ func (vp *VoterParams) Validate() error {
 	return nil
 }
 
-func (vp *VoterParams) ToProto() *tmproto.VoterParams {
+func (vp *VoterParams) ToProto() *ocproto.VoterParams {
 	if vp == nil {
 		return nil
 	}
-	return &tmproto.VoterParams{
+	return &ocproto.VoterParams{
 		VoterElectionThreshold:          vp.VoterElectionThreshold,
 		MaxTolerableByzantinePercentage: vp.MaxTolerableByzantinePercentage,
 	}
 }
-func VoterParamsFromProto(pb *tmproto.VoterParams) *VoterParams {
+func VoterParamsFromProto(pb *ocproto.VoterParams) *VoterParams {
 	if pb == nil {
 		return nil
 	}
