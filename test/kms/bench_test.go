@@ -12,6 +12,7 @@ import (
 	"testing"
 	"time"
 
+	tmprivvalproto "github.com/tendermint/tendermint/proto/tendermint/privval"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
 	"github.com/line/ostracon/config"
@@ -185,7 +186,7 @@ func benchmarkVRFProof(b *testing.B, pv types.PrivValidator, pubKey crypto.PubKe
 func ping(sl *privval.SignerListenerEndpoint) {
 	msg := privvalproto.Message{
 		Sum: &privvalproto.Message_PingRequest{
-			PingRequest: &privvalproto.PingRequest{},
+			PingRequest: &tmprivvalproto.PingRequest{},
 		},
 	}
 	_, err := sl.SendRequest(msg)
