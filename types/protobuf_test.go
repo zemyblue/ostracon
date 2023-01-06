@@ -8,7 +8,8 @@ import (
 	"github.com/golang/protobuf/proto" // nolint: staticcheck // still used by gogoproto
 	"github.com/tendermint/go-amino"
 
-	"github.com/line/ostracon/proto/ostracon/version"
+	tmversion "github.com/tendermint/tendermint/proto/tendermint/version"
+
 	"github.com/line/ostracon/types/time"
 
 	"github.com/stretchr/testify/assert"
@@ -91,7 +92,7 @@ func TestABCIHeader(t *testing.T) {
 	// build a full header
 	var height int64 = 5
 	header := newHeader(height, []byte("lastCommitHash"), []byte("dataHash"), []byte("evidenceHash"))
-	protocolVersion := version.Consensus{Block: 7, App: 8}
+	protocolVersion := tmversion.Consensus{Block: 7, App: 8}
 	timestamp := time.Now()
 	lastBlockID := BlockID{
 		Hash: []byte("hash"),
