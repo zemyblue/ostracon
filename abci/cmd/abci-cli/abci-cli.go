@@ -15,6 +15,7 @@ import (
 
 	"github.com/spf13/cobra"
 
+	tmabci "github.com/tendermint/tendermint/abci/types"
 	tmcrypto "github.com/tendermint/tendermint/proto/tendermint/crypto"
 
 	"github.com/line/ostracon/libs/log"
@@ -26,7 +27,7 @@ import (
 	"github.com/line/ostracon/abci/example/kvstore"
 	"github.com/line/ostracon/abci/server"
 	servertest "github.com/line/ostracon/abci/tests/server"
-	"github.com/line/ostracon/abci/types"
+	abci "github.com/line/ostracon/abci/types"
 	"github.com/line/ostracon/abci/version"
 	"github.com/line/ostracon/crypto/encoding"
 )
@@ -520,7 +521,7 @@ func cmdInfo(cmd *cobra.Command, args []string) error {
 	if len(args) == 1 {
 		version = args[0]
 	}
-	res, err := client.InfoSync(types.RequestInfo{Version: version})
+	res, err := client.InfoSync(tmabci.RequestInfo{Version: version})
 	if err != nil {
 		return err
 	}
@@ -543,7 +544,7 @@ func cmdSetOption(cmd *cobra.Command, args []string) error {
 	}
 
 	key, val := args[0], args[1]
-	_, err := client.SetOptionSync(types.RequestSetOption{Key: key, Value: val})
+	_, err := client.SetOptionSync(tmabci.RequestSetOption{Key: key, Value: val})
 	if err != nil {
 		return err
 	}
@@ -564,7 +565,7 @@ func cmdDeliverTx(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	res, err := client.DeliverTxSync(types.RequestDeliverTx{Tx: txBytes})
+	res, err := client.DeliverTxSync(tmabci.RequestDeliverTx{Tx: txBytes})
 	if err != nil {
 		return err
 	}
@@ -590,7 +591,7 @@ func cmdCheckTx(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	res, err := client.CheckTxSync(types.RequestCheckTx{Tx: txBytes})
+	res, err := client.CheckTxSync(tmabci.RequestCheckTx{Tx: txBytes})
 	if err != nil {
 		return err
 	}
@@ -630,7 +631,7 @@ func cmdQuery(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	resQuery, err := client.QuerySync(types.RequestQuery{
+	resQuery, err := client.QuerySync(tmabci.RequestQuery{
 		Data:   queryBytes,
 		Path:   flagPath,
 		Height: int64(flagHeight),
@@ -683,7 +684,7 @@ func cmdKVStore(cmd *cobra.Command, args []string) error {
 	logger := log.NewOCLogger(log.NewSyncWriter(os.Stdout))
 
 	// Create the application - in memory or persisted to disk
-	var app types.Application
+	var app abci.Application
 	if flagPersist == "" {
 		app = kvstore.NewApplication()
 	} else {
@@ -735,7 +736,7 @@ func cmdPersistKVStoreMakeValSetChangeTx(cmd *cobra.Command, args []string) erro
 	pubStr, tx := kvstore.MakeValSetChangeTxAndMore(publicKey, flagVotingPower)
 	{
 		fmt.Printf("DeliverTxSync: data=%s, tx=%s\n", pubStr, tx)
-		res, err := client.DeliverTxSync(types.RequestDeliverTx{Tx: []byte(tx)})
+		res, err := client.DeliverTxSync(tmabci.RequestDeliverTx{Tx: []byte(tx)})
 		if err != nil {
 			return err
 		}
@@ -748,7 +749,7 @@ func cmdPersistKVStoreMakeValSetChangeTx(cmd *cobra.Command, args []string) erro
 	}
 	{
 		fmt.Printf("QuerySync: data=%s\n", pubStr)
-		res, err := client.QuerySync(types.RequestQuery{Path: "/val", Data: []byte(pubStr)})
+		res, err := client.QuerySync(tmabci.RequestQuery{Path: "/val", Data: []byte(pubStr)})
 		if err != nil {
 			return err
 		}
@@ -758,8 +759,8 @@ func cmdPersistKVStoreMakeValSetChangeTx(cmd *cobra.Command, args []string) erro
 			Log:  res.Log,
 		})
 		fmt.Printf("original:publicKey:%s\n", publicKey)
-		validatorUpdate := types.ValidatorUpdate{}
-		err = types.ReadMessage(bytes.NewReader(res.Value), &validatorUpdate)
+		validatorUpdate := abci.ValidatorUpdate{}
+		err = abci.ReadMessage(bytes.NewReader(res.Value), &validatorUpdate)
 		if err != nil {
 			panic(err)
 		}
@@ -777,7 +778,7 @@ func printResponse(cmd *cobra.Command, args []string, rsp response) {
 	}
 
 	// Always print the status code.
-	if rsp.Code == types.CodeTypeOK {
+	if rsp.Code == abci.CodeTypeOK {
 		fmt.Printf("-> code: OK\n")
 	} else {
 		fmt.Printf("-> code: %d\n", rsp.Code)
