@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
+	tmabci "github.com/tendermint/tendermint/abci/types"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	tmversion "github.com/tendermint/tendermint/proto/tendermint/version"
 
@@ -188,14 +189,14 @@ func TestBeginBlockByzantineValidators(t *testing.T) {
 
 	abciEv := []abci.Evidence{
 		{
-			Type:             abci.EvidenceType_DUPLICATE_VOTE,
+			Type:             tmabci.EvidenceType_DUPLICATE_VOTE,
 			Height:           3,
 			Time:             defaultEvidenceTime,
 			Validator:        types.OC2PB.Validator(state.Validators.Validators[0]),
 			TotalVotingPower: 10,
 		},
 		{
-			Type:             abci.EvidenceType_LIGHT_CLIENT_ATTACK,
+			Type:             tmabci.EvidenceType_LIGHT_CLIENT_ATTACK,
 			Height:           8,
 			Time:             defaultEvidenceTime,
 			Validator:        types.OC2PB.Validator(state.Validators.Validators[0]),
