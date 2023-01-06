@@ -57,11 +57,11 @@ func (_m *Client) ApplySnapshotChunkSync(_a0 tmabci.RequestApplySnapshotChunk) (
 }
 
 // BeginBlockAsync provides a mock function with given fields: _a0, _a1
-func (_m *Client) BeginBlockAsync(_a0 tmabci.RequestBeginBlock, _a1 abcicli.ResponseCallback) *abcicli.ReqRes {
+func (_m *Client) BeginBlockAsync(_a0 abci.RequestBeginBlock, _a1 abcicli.ResponseCallback) *abcicli.ReqRes {
 	ret := _m.Called(_a0, _a1)
 
 	var r0 *abcicli.ReqRes
-	if rf, ok := ret.Get(0).(func(tmabci.RequestBeginBlock, abcicli.ResponseCallback) *abcicli.ReqRes); ok {
+	if rf, ok := ret.Get(0).(func(abci.RequestBeginBlock, abcicli.ResponseCallback) *abcicli.ReqRes); ok {
 		r0 = rf(_a0, _a1)
 	} else {
 		if ret.Get(0) != nil {
@@ -73,11 +73,11 @@ func (_m *Client) BeginBlockAsync(_a0 tmabci.RequestBeginBlock, _a1 abcicli.Resp
 }
 
 // BeginBlockSync provides a mock function with given fields: _a0
-func (_m *Client) BeginBlockSync(_a0 tmabci.RequestBeginBlock) (*tmabci.ResponseBeginBlock, error) {
+func (_m *Client) BeginBlockSync(_a0 abci.RequestBeginBlock) (*tmabci.ResponseBeginBlock, error) {
 	ret := _m.Called(_a0)
 
 	var r0 *tmabci.ResponseBeginBlock
-	if rf, ok := ret.Get(0).(func(tmabci.RequestBeginBlock) *tmabci.ResponseBeginBlock); ok {
+	if rf, ok := ret.Get(0).(func(abci.RequestBeginBlock) *tmabci.ResponseBeginBlock); ok {
 		r0 = rf(_a0)
 	} else {
 		if ret.Get(0) != nil {
@@ -86,7 +86,7 @@ func (_m *Client) BeginBlockSync(_a0 tmabci.RequestBeginBlock) (*tmabci.Response
 	}
 
 	var r1 error
-	if rf, ok := ret.Get(1).(func(tmabci.RequestBeginBlock) error); ok {
+	if rf, ok := ret.Get(1).(func(abci.RequestBeginBlock) error); ok {
 		r1 = rf(_a0)
 	} else {
 		r1 = ret.Error(1)
@@ -151,15 +151,15 @@ func (_m *Client) CheckTxAsync(_a0 tmabci.RequestCheckTx, _a1 abcicli.ResponseCa
 }
 
 // CheckTxSync provides a mock function with given fields: _a0
-func (_m *Client) CheckTxSync(_a0 tmabci.RequestCheckTx) (*tmabci.ResponseCheckTx, error) {
+func (_m *Client) CheckTxSync(_a0 tmabci.RequestCheckTx) (*abci.ResponseCheckTx, error) {
 	ret := _m.Called(_a0)
 
-	var r0 *tmabci.ResponseCheckTx
-	if rf, ok := ret.Get(0).(func(tmabci.RequestCheckTx) *tmabci.ResponseCheckTx); ok {
+	var r0 *abci.ResponseCheckTx
+	if rf, ok := ret.Get(0).(func(tmabci.RequestCheckTx) *abci.ResponseCheckTx); ok {
 		r0 = rf(_a0)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*tmabci.ResponseCheckTx)
+			r0 = ret.Get(0).(*abci.ResponseCheckTx)
 		}
 	}
 
@@ -307,15 +307,15 @@ func (_m *Client) EndBlockAsync(_a0 tmabci.RequestEndBlock, _a1 abcicli.Response
 }
 
 // EndBlockSync provides a mock function with given fields: _a0
-func (_m *Client) EndBlockSync(_a0 tmabci.RequestEndBlock) (*tmabci.ResponseEndBlock, error) {
+func (_m *Client) EndBlockSync(_a0 tmabci.RequestEndBlock) (*abci.ResponseEndBlock, error) {
 	ret := _m.Called(_a0)
 
-	var r0 *tmabci.ResponseEndBlock
-	if rf, ok := ret.Get(0).(func(tmabci.RequestEndBlock) *tmabci.ResponseEndBlock); ok {
+	var r0 *abci.ResponseEndBlock
+	if rf, ok := ret.Get(0).(func(tmabci.RequestEndBlock) *abci.ResponseEndBlock); ok {
 		r0 = rf(_a0)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*tmabci.ResponseEndBlock)
+			r0 = ret.Get(0).(*abci.ResponseEndBlock)
 		}
 	}
 
@@ -477,11 +477,11 @@ func (_m *Client) InfoSync(_a0 tmabci.RequestInfo) (*tmabci.ResponseInfo, error)
 }
 
 // InitChainAsync provides a mock function with given fields: _a0, _a1
-func (_m *Client) InitChainAsync(_a0 tmabci.RequestInitChain, _a1 abcicli.ResponseCallback) *abcicli.ReqRes {
+func (_m *Client) InitChainAsync(_a0 abci.RequestInitChain, _a1 abcicli.ResponseCallback) *abcicli.ReqRes {
 	ret := _m.Called(_a0, _a1)
 
 	var r0 *abcicli.ReqRes
-	if rf, ok := ret.Get(0).(func(tmabci.RequestInitChain, abcicli.ResponseCallback) *abcicli.ReqRes); ok {
+	if rf, ok := ret.Get(0).(func(abci.RequestInitChain, abcicli.ResponseCallback) *abcicli.ReqRes); ok {
 		r0 = rf(_a0, _a1)
 	} else {
 		if ret.Get(0) != nil {
@@ -493,20 +493,20 @@ func (_m *Client) InitChainAsync(_a0 tmabci.RequestInitChain, _a1 abcicli.Respon
 }
 
 // InitChainSync provides a mock function with given fields: _a0
-func (_m *Client) InitChainSync(_a0 tmabci.RequestInitChain) (*tmabci.ResponseInitChain, error) {
+func (_m *Client) InitChainSync(_a0 abci.RequestInitChain) (*abci.ResponseInitChain, error) {
 	ret := _m.Called(_a0)
 
-	var r0 *tmabci.ResponseInitChain
-	if rf, ok := ret.Get(0).(func(tmabci.RequestInitChain) *tmabci.ResponseInitChain); ok {
+	var r0 *abci.ResponseInitChain
+	if rf, ok := ret.Get(0).(func(abci.RequestInitChain) *abci.ResponseInitChain); ok {
 		r0 = rf(_a0)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*tmabci.ResponseInitChain)
+			r0 = ret.Get(0).(*abci.ResponseInitChain)
 		}
 	}
 
 	var r1 error
-	if rf, ok := ret.Get(1).(func(tmabci.RequestInitChain) error); ok {
+	if rf, ok := ret.Get(1).(func(abci.RequestInitChain) error); ok {
 		r1 = rf(_a0)
 	} else {
 		r1 = ret.Error(1)

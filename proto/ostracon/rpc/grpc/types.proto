@@ -29,6 +29,6 @@ message ResponseBroadcastTx {
 // Service Definition
 
 service BroadcastAPI {
-//  rpc Ping(tendermint.abci.RequestPing) returns (tendermint.abci.ResponsePing);
+  rpc Ping(tendermint.rpc.grpc.RequestPing) returns (tendermint.rpc.grpc.ResponsePing);
   rpc BroadcastTx(tendermint.rpc.grpc.RequestBroadcastTx) returns (ResponseBroadcastTx);
 }
