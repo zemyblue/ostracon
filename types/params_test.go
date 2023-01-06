@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
 	abci "github.com/line/ostracon/abci/types"
-	tmproto "github.com/line/ostracon/proto/ostracon/types"
 )
 
 var (

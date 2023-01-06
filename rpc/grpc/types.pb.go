@@ -8,6 +8,8 @@ import (
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
 	types "github.com/line/ostracon/abci/types"
+	types1 "github.com/tendermint/tendermint/abci/types"
+	grpc1 "github.com/tendermint/tendermint/rpc/grpc"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -27,132 +29,16 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-type RequestPing struct {
-}
-
-func (m *RequestPing) Reset()         { *m = RequestPing{} }
-func (m *RequestPing) String() string { return proto.CompactTextString(m) }
-func (*RequestPing) ProtoMessage()    {}
-func (*RequestPing) Descriptor() ([]byte, []int) {
-	return fileDescriptor_907c7db099111068, []int{0}
-}
-func (m *RequestPing) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *RequestPing) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_RequestPing.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *RequestPing) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RequestPing.Merge(m, src)
-}
-func (m *RequestPing) XXX_Size() int {
-	return m.Size()
-}
-func (m *RequestPing) XXX_DiscardUnknown() {
-	xxx_messageInfo_RequestPing.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_RequestPing proto.InternalMessageInfo
-
-type RequestBroadcastTx struct {
-	Tx []byte `protobuf:"bytes,1,opt,name=tx,proto3" json:"tx,omitempty"`
-}
-
-func (m *RequestBroadcastTx) Reset()         { *m = RequestBroadcastTx{} }
-func (m *RequestBroadcastTx) String() string { return proto.CompactTextString(m) }
-func (*RequestBroadcastTx) ProtoMessage()    {}
-func (*RequestBroadcastTx) Descriptor() ([]byte, []int) {
-	return fileDescriptor_907c7db099111068, []int{1}
-}
-func (m *RequestBroadcastTx) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *RequestBroadcastTx) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_RequestBroadcastTx.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *RequestBroadcastTx) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RequestBroadcastTx.Merge(m, src)
-}
-func (m *RequestBroadcastTx) XXX_Size() int {
-	return m.Size()
-}
-func (m *RequestBroadcastTx) XXX_DiscardUnknown() {
-	xxx_messageInfo_RequestBroadcastTx.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_RequestBroadcastTx proto.InternalMessageInfo
-
-func (m *RequestBroadcastTx) GetTx() []byte {
-	if m != nil {
-		return m.Tx
-	}
-	return nil
-}
-
-type ResponsePing struct {
-}
-
-func (m *ResponsePing) Reset()         { *m = ResponsePing{} }
-func (m *ResponsePing) String() string { return proto.CompactTextString(m) }
-func (*ResponsePing) ProtoMessage()    {}
-func (*ResponsePing) Descriptor() ([]byte, []int) {
-	return fileDescriptor_907c7db099111068, []int{2}
-}
-func (m *ResponsePing) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *ResponsePing) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_ResponsePing.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *ResponsePing) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ResponsePing.Merge(m, src)
-}
-func (m *ResponsePing) XXX_Size() int {
-	return m.Size()
-}
-func (m *ResponsePing) XXX_DiscardUnknown() {
-	xxx_messageInfo_ResponsePing.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_ResponsePing proto.InternalMessageInfo
-
 type ResponseBroadcastTx struct {
-	CheckTx   *types.ResponseCheckTx   `protobuf:"bytes,1,opt,name=check_tx,json=checkTx,proto3" json:"check_tx,omitempty"`
-	DeliverTx *types.ResponseDeliverTx `protobuf:"bytes,2,opt,name=deliver_tx,json=deliverTx,proto3" json:"deliver_tx,omitempty"`
+	CheckTx   *types.ResponseCheckTx    `protobuf:"bytes,1,opt,name=check_tx,json=checkTx,proto3" json:"check_tx,omitempty"`
+	DeliverTx *types1.ResponseDeliverTx `protobuf:"bytes,2,opt,name=deliver_tx,json=deliverTx,proto3" json:"deliver_tx,omitempty"`
 }
 
 func (m *ResponseBroadcastTx) Reset()         { *m = ResponseBroadcastTx{} }
 func (m *ResponseBroadcastTx) String() string { return proto.CompactTextString(m) }
 func (*ResponseBroadcastTx) ProtoMessage()    {}
 func (*ResponseBroadcastTx) Descriptor() ([]byte, []int) {
-	return fileDescriptor_907c7db099111068, []int{3}
+	return fileDescriptor_907c7db099111068, []int{0}
 }
 func (m *ResponseBroadcastTx) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -188,7 +74,7 @@ func (m *ResponseBroadcastTx) GetCheckTx() *types.ResponseCheckTx {
 	return nil
 }
 
-func (m *ResponseBroadcastTx) GetDeliverTx() *types.ResponseDeliverTx {
+func (m *ResponseBroadcastTx) GetDeliverTx() *types1.ResponseDeliverTx {
 	if m != nil {
 		return m.DeliverTx
 	}
@@ -196,36 +82,31 @@ func (m *ResponseBroadcastTx) GetDeliverTx() *types.ResponseDeliverTx {
 }
 
 func init() {
-	proto.RegisterType((*RequestPing)(nil), "ostracon.rpc.grpc.RequestPing")
-	proto.RegisterType((*RequestBroadcastTx)(nil), "ostracon.rpc.grpc.RequestBroadcastTx")
-	proto.RegisterType((*ResponsePing)(nil), "ostracon.rpc.grpc.ResponsePing")
 	proto.RegisterType((*ResponseBroadcastTx)(nil), "ostracon.rpc.grpc.ResponseBroadcastTx")
 }
 
 func init() { proto.RegisterFile("ostracon/rpc/grpc/types.proto", fileDescriptor_907c7db099111068) }
 
 var fileDescriptor_907c7db099111068 = []byte{
-	// 316 bytes of a gzipped FileDescriptorProto
+	// 288 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xcd, 0x2f, 0x2e, 0x29,
 	0x4a, 0x4c, 0xce, 0xcf, 0xd3, 0x2f, 0x2a, 0x48, 0xd6, 0x4f, 0x07, 0x11, 0x25, 0x95, 0x05, 0xa9,
 	0xc5, 0x7a, 0x05, 0x45, 0xf9, 0x25, 0xf9, 0x42, 0x82, 0x30, 0x69, 0xbd, 0xa2, 0x82, 0x64, 0x3d,
-	0x90, 0xb4, 0x94, 0x24, 0x5c, 0x47, 0x62, 0x52, 0x72, 0x26, 0xb2, 0x6a, 0x25, 0x5e, 0x2e, 0xee,
-	0xa0, 0xd4, 0xc2, 0xd2, 0xd4, 0xe2, 0x92, 0x80, 0xcc, 0xbc, 0x74, 0x25, 0x15, 0x2e, 0x21, 0x28,
-	0xd7, 0xa9, 0x28, 0x3f, 0x31, 0x25, 0x39, 0xb1, 0xb8, 0x24, 0xa4, 0x42, 0x88, 0x8f, 0x8b, 0xa9,
-	0xa4, 0x42, 0x82, 0x51, 0x81, 0x51, 0x83, 0x27, 0x88, 0xa9, 0xa4, 0x42, 0x89, 0x8f, 0x8b, 0x27,
-	0x28, 0xb5, 0xb8, 0x20, 0x3f, 0xaf, 0x38, 0x15, 0xac, 0x6b, 0x22, 0x23, 0x97, 0x30, 0x4c, 0x00,
-	0x59, 0x9f, 0x25, 0x17, 0x47, 0x72, 0x46, 0x6a, 0x72, 0x76, 0x3c, 0x54, 0x37, 0xb7, 0x91, 0x9c,
-	0x1e, 0xdc, 0x75, 0x20, 0xa7, 0xe8, 0xc1, 0x74, 0x39, 0x83, 0x94, 0x85, 0x54, 0x04, 0xb1, 0x27,
-	0x43, 0x18, 0x42, 0xf6, 0x5c, 0x5c, 0x29, 0xa9, 0x39, 0x99, 0x65, 0xa9, 0x45, 0x20, 0xcd, 0x4c,
-	0x60, 0xcd, 0x0a, 0x38, 0x34, 0xbb, 0x40, 0x14, 0x86, 0x54, 0x04, 0x71, 0xa6, 0xc0, 0x98, 0x46,
-	0x5b, 0x19, 0xb9, 0x78, 0xe0, 0x6e, 0x71, 0x0c, 0xf0, 0x14, 0x72, 0xe7, 0x62, 0x01, 0x39, 0x56,
-	0x08, 0xc9, 0x09, 0xb0, 0x00, 0xd2, 0x43, 0x0a, 0x02, 0x29, 0x79, 0xac, 0xf2, 0x08, 0xdf, 0x0a,
-	0xc5, 0x70, 0x71, 0x23, 0x7b, 0x52, 0x15, 0xb7, 0x79, 0x48, 0xca, 0xa4, 0xd4, 0xf0, 0x18, 0x8b,
-	0xa4, 0xce, 0xc9, 0xe5, 0xc4, 0x23, 0x39, 0xc6, 0x0b, 0x8f, 0xe4, 0x18, 0x1f, 0x3c, 0x92, 0x63,
-	0x9c, 0xf0, 0x58, 0x8e, 0xe1, 0xc2, 0x63, 0x39, 0x86, 0x1b, 0x8f, 0xe5, 0x18, 0xa2, 0xb4, 0xd2,
-	0x33, 0x4b, 0x32, 0x4a, 0x93, 0xf4, 0x92, 0xf3, 0x73, 0xf5, 0x73, 0x32, 0xf3, 0x52, 0xf5, 0x31,
-	0xd2, 0x81, 0x75, 0x72, 0x7e, 0x51, 0x2a, 0x88, 0x91, 0xc4, 0x06, 0x8e, 0x5d, 0x63, 0x40, 0x00,
-	0x00, 0x00, 0xff, 0xff, 0x64, 0xf2, 0x70, 0x9d, 0x2c, 0x02, 0x00, 0x00,
+	0x90, 0xb4, 0x94, 0x24, 0x5c, 0x47, 0x62, 0x52, 0x72, 0x26, 0xb2, 0x6a, 0x29, 0xe9, 0x92, 0xd4,
+	0xbc, 0x94, 0xd4, 0xa2, 0xdc, 0xcc, 0xbc, 0x12, 0x4c, 0x49, 0x79, 0x24, 0x49, 0x6c, 0x76, 0x29,
+	0x4d, 0x66, 0xe4, 0x12, 0x0e, 0x4a, 0x2d, 0x2e, 0xc8, 0xcf, 0x2b, 0x4e, 0x75, 0x2a, 0xca, 0x4f,
+	0x4c, 0x49, 0x4e, 0x2c, 0x2e, 0x09, 0xa9, 0x10, 0xb2, 0xe4, 0xe2, 0x48, 0xce, 0x48, 0x4d, 0xce,
+	0x8e, 0x2f, 0xa9, 0x90, 0x60, 0x54, 0x60, 0xd4, 0xe0, 0x36, 0x92, 0xd3, 0x83, 0x3b, 0x0b, 0x64,
+	0x8d, 0x1e, 0x4c, 0x97, 0x33, 0x48, 0x59, 0x48, 0x45, 0x10, 0x7b, 0x32, 0x84, 0x21, 0xe4, 0xc8,
+	0xc5, 0x95, 0x92, 0x9a, 0x93, 0x59, 0x96, 0x5a, 0x04, 0xd2, 0xcc, 0x04, 0xd6, 0xac, 0xa4, 0x87,
+	0x70, 0x08, 0xaa, 0x76, 0x17, 0x88, 0xd2, 0x90, 0x8a, 0x20, 0xce, 0x14, 0x18, 0xd3, 0x28, 0x8f,
+	0x8b, 0x07, 0xee, 0x18, 0xc7, 0x00, 0x4f, 0xa1, 0x38, 0x2e, 0x6e, 0x64, 0xc7, 0xa9, 0x23, 0x9b,
+	0x06, 0x0b, 0x23, 0xbd, 0xa0, 0xd4, 0xc2, 0xd2, 0xd4, 0xe2, 0x12, 0x24, 0x85, 0x52, 0x6a, 0x7a,
+	0x18, 0x41, 0xa9, 0x87, 0xc5, 0xb7, 0x4e, 0x2e, 0x27, 0x1e, 0xc9, 0x31, 0x5e, 0x78, 0x24, 0xc7,
+	0xf8, 0xe0, 0x91, 0x1c, 0xe3, 0x84, 0xc7, 0x72, 0x0c, 0x17, 0x1e, 0xcb, 0x31, 0xdc, 0x78, 0x2c,
+	0xc7, 0x10, 0xa5, 0x95, 0x9e, 0x59, 0x92, 0x51, 0x9a, 0xa4, 0x97, 0x9c, 0x9f, 0xab, 0x9f, 0x93,
+	0x99, 0x97, 0xaa, 0x8f, 0x11, 0x75, 0xd6, 0xc9, 0xf9, 0x45, 0xa9, 0x20, 0x46, 0x12, 0x1b, 0x38,
+	0x48, 0x8d, 0x01, 0x01, 0x00, 0x00, 0xff, 0xff, 0x48, 0xee, 0xdf, 0xd9, 0xdf, 0x01, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -240,8 +121,8 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type BroadcastAPIClient interface {
-	Ping(ctx context.Context, in *RequestPing, opts ...grpc.CallOption) (*ResponsePing, error)
-	BroadcastTx(ctx context.Context, in *RequestBroadcastTx, opts ...grpc.CallOption) (*ResponseBroadcastTx, error)
+	//  rpc Ping(tendermint.abci.RequestPing) returns (tendermint.abci.ResponsePing);
+	BroadcastTx(ctx context.Context, in *grpc1.RequestBroadcastTx, opts ...grpc.CallOption) (*ResponseBroadcastTx, error)
 }
 
 type broadcastAPIClient struct {
@@ -252,16 +133,7 @@ func NewBroadcastAPIClient(cc *grpc.ClientConn) BroadcastAPIClient {
 	return &broadcastAPIClient{cc}
 }
 
-func (c *broadcastAPIClient) Ping(ctx context.Context, in *RequestPing, opts ...grpc.CallOption) (*ResponsePing, error) {
-	out := new(ResponsePing)
-	err := c.cc.Invoke(ctx, "/ostracon.rpc.grpc.BroadcastAPI/Ping", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *broadcastAPIClient) BroadcastTx(ctx context.Context, in *RequestBroadcastTx, opts ...grpc.CallOption) (*ResponseBroadcastTx, error) {
+func (c *broadcastAPIClient) BroadcastTx(ctx context.Context, in *grpc1.RequestBroadcastTx, opts ...grpc.CallOption) (*ResponseBroadcastTx, error) {
 	out := new(ResponseBroadcastTx)
 	err := c.cc.Invoke(ctx, "/ostracon.rpc.grpc.BroadcastAPI/BroadcastTx", in, out, opts...)
 	if err != nil {
@@ -272,18 +144,15 @@ func (c *broadcastAPIClient) BroadcastTx(ctx context.Context, in *RequestBroadca
 
 // BroadcastAPIServer is the server API for BroadcastAPI service.
 type BroadcastAPIServer interface {
-	Ping(context.Context, *RequestPing) (*ResponsePing, error)
-	BroadcastTx(context.Context, *RequestBroadcastTx) (*ResponseBroadcastTx, error)
+	//  rpc Ping(tendermint.abci.RequestPing) returns (tendermint.abci.ResponsePing);
+	BroadcastTx(context.Context, *grpc1.RequestBroadcastTx) (*ResponseBroadcastTx, error)
 }
 
 // UnimplementedBroadcastAPIServer can be embedded to have forward compatible implementations.
 type UnimplementedBroadcastAPIServer struct {
 }
 
-func (*UnimplementedBroadcastAPIServer) Ping(ctx context.Context, req *RequestPing) (*ResponsePing, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
-}
-func (*UnimplementedBroadcastAPIServer) BroadcastTx(ctx context.Context, req *RequestBroadcastTx) (*ResponseBroadcastTx, error) {
+func (*UnimplementedBroadcastAPIServer) BroadcastTx(ctx context.Context, req *grpc1.RequestBroadcastTx) (*ResponseBroadcastTx, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BroadcastTx not implemented")
 }
 
@@ -291,26 +160,8 @@ func RegisterBroadcastAPIServer(s *grpc.Server, srv BroadcastAPIServer) {
 	s.RegisterService(&_BroadcastAPI_serviceDesc, srv)
 }
 
-func _BroadcastAPI_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestPing)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BroadcastAPIServer).Ping(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/ostracon.rpc.grpc.BroadcastAPI/Ping",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BroadcastAPIServer).Ping(ctx, req.(*RequestPing))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _BroadcastAPI_BroadcastTx_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestBroadcastTx)
+	in := new(grpc1.RequestBroadcastTx)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -322,7 +173,7 @@ func _BroadcastAPI_BroadcastTx_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/ostracon.rpc.grpc.BroadcastAPI/BroadcastTx",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BroadcastAPIServer).BroadcastTx(ctx, req.(*RequestBroadcastTx))
+		return srv.(BroadcastAPIServer).BroadcastTx(ctx, req.(*grpc1.RequestBroadcastTx))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -332,92 +183,12 @@ var _BroadcastAPI_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*BroadcastAPIServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Ping",
-			Handler:    _BroadcastAPI_Ping_Handler,
-		},
-		{
 			MethodName: "BroadcastTx",
 			Handler:    _BroadcastAPI_BroadcastTx_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "ostracon/rpc/grpc/types.proto",
-}
-
-func (m *RequestPing) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *RequestPing) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *RequestPing) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	return len(dAtA) - i, nil
-}
-
-func (m *RequestBroadcastTx) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *RequestBroadcastTx) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *RequestBroadcastTx) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.Tx) > 0 {
-		i -= len(m.Tx)
-		copy(dAtA[i:], m.Tx)
-		i = encodeVarintTypes(dAtA, i, uint64(len(m.Tx)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *ResponsePing) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *ResponsePing) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ResponsePing) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	return len(dAtA) - i, nil
 }
 
 func (m *ResponseBroadcastTx) Marshal() (dAtA []byte, err error) {
@@ -478,37 +249,6 @@ func encodeVarintTypes(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *RequestPing) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	return n
-}
-
-func (m *RequestBroadcastTx) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Tx)
-	if l > 0 {
-		n += 1 + l + sovTypes(uint64(l))
-	}
-	return n
-}
-
-func (m *ResponsePing) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	return n
-}
-
 func (m *ResponseBroadcastTx) Size() (n int) {
 	if m == nil {
 		return 0
@@ -531,190 +271,6 @@ func sovTypes(x uint64) (n int) {
 }
 func sozTypes(x uint64) (n int) {
 	return sovTypes(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (m *RequestPing) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowTypes
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: RequestPing: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: RequestPing: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		default:
-			iNdEx = preIndex
-			skippy, err := skipTypes(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthTypes
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *RequestBroadcastTx) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowTypes
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: RequestBroadcastTx: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: RequestBroadcastTx: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Tx", wireType)
-			}
-			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTypes
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if byteLen < 0 {
-				return ErrInvalidLengthTypes
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthTypes
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Tx = append(m.Tx[:0], dAtA[iNdEx:postIndex]...)
-			if m.Tx == nil {
-				m.Tx = []byte{}
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipTypes(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthTypes
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *ResponsePing) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowTypes
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: ResponsePing: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ResponsePing: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		default:
-			iNdEx = preIndex
-			skippy, err := skipTypes(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthTypes
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
 }
 func (m *ResponseBroadcastTx) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -811,7 +367,7 @@ func (m *ResponseBroadcastTx) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.DeliverTx == nil {
-				m.DeliverTx = &types.ResponseDeliverTx{}
+				m.DeliverTx = &types1.ResponseDeliverTx{}
 			}
 			if err := m.DeliverTx.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err

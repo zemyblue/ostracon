@@ -5,37 +5,39 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 
-	privvalproto "github.com/line/ostracon/proto/ostracon/privval"
+	privvalproto "github.com/tendermint/tendermint/proto/tendermint/privval"
+
+	oprivvalproto "github.com/line/ostracon/proto/ostracon/privval"
 )
 
 // TODO: Add ChainIDRequest
 
-func mustWrapMsg(pb proto.Message) privvalproto.Message {
-	msg := privvalproto.Message{}
+func mustWrapMsg(pb proto.Message) oprivvalproto.Message {
+	msg := oprivvalproto.Message{}
 
 	switch pb := pb.(type) {
-	case *privvalproto.Message:
+	case *oprivvalproto.Message:
 		msg = *pb
 	case *privvalproto.PubKeyRequest:
-		msg.Sum = &privvalproto.Message_PubKeyRequest{PubKeyRequest: pb}
-	case *privvalproto.PubKeyResponse:
-		msg.Sum = &privvalproto.Message_PubKeyResponse{PubKeyResponse: pb}
+		msg.Sum = &oprivvalproto.Message_PubKeyRequest{PubKeyRequest: pb}
+	case *oprivvalproto.PubKeyResponse:
+		msg.Sum = &oprivvalproto.Message_PubKeyResponse{PubKeyResponse: pb}
 	case *privvalproto.SignVoteRequest:
-		msg.Sum = &privvalproto.Message_SignVoteRequest{SignVoteRequest: pb}
+		msg.Sum = &oprivvalproto.Message_SignVoteRequest{SignVoteRequest: pb}
 	case *privvalproto.SignedVoteResponse:
-		msg.Sum = &privvalproto.Message_SignedVoteResponse{SignedVoteResponse: pb}
+		msg.Sum = &oprivvalproto.Message_SignedVoteResponse{SignedVoteResponse: pb}
 	case *privvalproto.SignedProposalResponse:
-		msg.Sum = &privvalproto.Message_SignedProposalResponse{SignedProposalResponse: pb}
+		msg.Sum = &oprivvalproto.Message_SignedProposalResponse{SignedProposalResponse: pb}
 	case *privvalproto.SignProposalRequest:
-		msg.Sum = &privvalproto.Message_SignProposalRequest{SignProposalRequest: pb}
-	case *privvalproto.VRFProofRequest:
-		msg.Sum = &privvalproto.Message_VrfProofRequest{VrfProofRequest: pb}
-	case *privvalproto.VRFProofResponse:
-		msg.Sum = &privvalproto.Message_VrfProofResponse{VrfProofResponse: pb}
+		msg.Sum = &oprivvalproto.Message_SignProposalRequest{SignProposalRequest: pb}
+	case *oprivvalproto.VRFProofRequest:
+		msg.Sum = &oprivvalproto.Message_VrfProofRequest{VrfProofRequest: pb}
+	case *oprivvalproto.VRFProofResponse:
+		msg.Sum = &oprivvalproto.Message_VrfProofResponse{VrfProofResponse: pb}
 	case *privvalproto.PingRequest:
-		msg.Sum = &privvalproto.Message_PingRequest{PingRequest: pb}
+		msg.Sum = &oprivvalproto.Message_PingRequest{PingRequest: pb}
 	case *privvalproto.PingResponse:
-		msg.Sum = &privvalproto.Message_PingResponse{PingResponse: pb}
+		msg.Sum = &oprivvalproto.Message_PingResponse{PingResponse: pb}
 	default:
 		panic(fmt.Errorf("unknown message type %T", pb))
 	}

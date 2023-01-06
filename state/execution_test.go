@@ -9,6 +9,8 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+
 	abci "github.com/line/ostracon/abci/types"
 	"github.com/line/ostracon/crypto"
 	"github.com/line/ostracon/crypto/ed25519"
@@ -17,14 +19,13 @@ import (
 	"github.com/line/ostracon/libs/bytes"
 	"github.com/line/ostracon/libs/log"
 	mmock "github.com/line/ostracon/mempool/mock"
-	tmproto "github.com/line/ostracon/proto/ostracon/types"
-	tmversion "github.com/line/ostracon/proto/ostracon/version"
 	"github.com/line/ostracon/proxy"
 	sm "github.com/line/ostracon/state"
 	"github.com/line/ostracon/state/mocks"
 	"github.com/line/ostracon/types"
 	tmtime "github.com/line/ostracon/types/time"
 	"github.com/line/ostracon/version"
+	tmversion "github.com/tendermint/tendermint/proto/tendermint/version"
 )
 
 var (

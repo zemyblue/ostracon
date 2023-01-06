@@ -6,7 +6,9 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 
-	bcproto "github.com/line/ostracon/proto/ostracon/blockchain"
+	bcproto "github.com/tendermint/tendermint/proto/tendermint/blockchain"
+
+	obcproto "github.com/line/ostracon/proto/ostracon/blockchain"
 	"github.com/line/ostracon/types"
 )
 
@@ -21,19 +23,19 @@ const (
 
 // EncodeMsg encodes a Protobuf message
 func EncodeMsg(pb proto.Message) ([]byte, error) {
-	msg := bcproto.Message{}
+	msg := obcproto.Message{}
 
 	switch pb := pb.(type) {
 	case *bcproto.BlockRequest:
-		msg.Sum = &bcproto.Message_BlockRequest{BlockRequest: pb}
-	case *bcproto.BlockResponse:
-		msg.Sum = &bcproto.Message_BlockResponse{BlockResponse: pb}
+		msg.Sum = &obcproto.Message_BlockRequest{BlockRequest: pb}
+	case *obcproto.BlockResponse:
+		msg.Sum = &obcproto.Message_BlockResponse{BlockResponse: pb}
 	case *bcproto.NoBlockResponse:
-		msg.Sum = &bcproto.Message_NoBlockResponse{NoBlockResponse: pb}
+		msg.Sum = &obcproto.Message_NoBlockResponse{NoBlockResponse: pb}
 	case *bcproto.StatusRequest:
-		msg.Sum = &bcproto.Message_StatusRequest{StatusRequest: pb}
+		msg.Sum = &obcproto.Message_StatusRequest{StatusRequest: pb}
 	case *bcproto.StatusResponse:
-		msg.Sum = &bcproto.Message_StatusResponse{StatusResponse: pb}
+		msg.Sum = &obcproto.Message_StatusResponse{StatusResponse: pb}
 	default:
 		return nil, fmt.Errorf("unknown message type %T", pb)
 	}
@@ -82,7 +84,7 @@ func ValidateMsg(pb proto.Message) error {
 		if msg.Height < 0 {
 			return errors.New("negative Height")
 		}
-	case *bcproto.BlockResponse:
+	case *obcproto.BlockResponse:
 		_, err := types.BlockFromProto(msg.Block)
 		if err != nil {
 			return err

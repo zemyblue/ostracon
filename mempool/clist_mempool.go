@@ -8,6 +8,9 @@ import (
 	"sync/atomic"
 	"time"
 
+	tmabci "github.com/tendermint/tendermint/abci/types"
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+
 	abci "github.com/line/ostracon/abci/types"
 	cfg "github.com/line/ostracon/config"
 	auto "github.com/line/ostracon/libs/autofile"
@@ -17,7 +20,6 @@ import (
 	tmos "github.com/line/ostracon/libs/os"
 	tmsync "github.com/line/ostracon/libs/sync"
 	"github.com/line/ostracon/p2p"
-	tmproto "github.com/line/ostracon/proto/ostracon/types"
 	"github.com/line/ostracon/proxy"
 	"github.com/line/ostracon/types"
 )
@@ -248,7 +250,7 @@ func (mem *CListMempool) CheckTxSync(tx types.Tx, txInfo TxInfo) (res *abci.Resp
 
 	// CONTRACT: `app.CheckTxSync()` should check whether `GasWanted` is valid (0 <= GasWanted <= block.masGas)
 	var r *abci.ResponseCheckTx
-	r, err = mem.proxyAppConn.CheckTxSync(abci.RequestCheckTx{Tx: tx})
+	r, err = mem.proxyAppConn.CheckTxSync(tmabci.RequestCheckTx{Tx: tx})
 	if err != nil {
 		return res, err
 	}
@@ -294,7 +296,7 @@ func (mem *CListMempool) checkTxAsync(tx types.Tx, txInfo TxInfo, prepareCb func
 	}
 
 	// CONTRACT: `app.CheckTxAsync()` should check whether `GasWanted` is valid (0 <= GasWanted <= block.masGas)
-	mem.proxyAppConn.CheckTxAsync(abci.RequestCheckTx{Tx: tx}, func(res *abci.Response) {
+	mem.proxyAppConn.CheckTxAsync(tmabci.RequestCheckTx{Tx: tx}, func(res *abci.Response) {
 		mem.reqResCb(tx, txInfo.SenderID, txInfo.SenderP2PID, res, func(response *abci.Response) {
 			if checkTxCb != nil {
 				checkTxCb(response)
@@ -385,7 +387,7 @@ func (mem *CListMempool) globalCb(req *abci.Request, res *abci.Response) {
 		return
 	}
 
-	if checkTxReq.Type == abci.CheckTxType_Recheck {
+	if checkTxReq.Type == tmabci.CheckTxType_Recheck {
 		mem.metrics.RecheckCount.Add(1)
 		mem.resCbRecheck(req, res)
 
@@ -690,7 +692,7 @@ func (mem *CListMempool) ReapMaxTxs(max int) types.Txs {
 // Lock() must be held by the caller during execution.
 func (mem *CListMempool) Update(
 	block *types.Block,
-	deliverTxResponses []*abci.ResponseDeliverTx,
+	deliverTxResponses []*tmabci.ResponseDeliverTx,
 	preCheck PreCheckFunc,
 	postCheck PostCheckFunc,
 ) (err error) {
@@ -776,9 +778,9 @@ func (mem *CListMempool) recheckTxs() {
 		wg.Add(1)
 
 		memTx := e.Value.(*mempoolTx)
-		req := abci.RequestCheckTx{
+		req := tmabci.RequestCheckTx{
 			Tx:   memTx.tx,
-			Type: abci.CheckTxType_Recheck,
+			Type: tmabci.CheckTxType_Recheck,
 		}
 
 		mem.proxyAppConn.CheckTxAsync(req, func(res *abci.Response) {

@@ -8,6 +8,8 @@ import (
 	"time"
 
 	"github.com/gogo/protobuf/proto"
+	tmcons "github.com/tendermint/tendermint/proto/tendermint/consensus"
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
 	cstypes "github.com/line/ostracon/consensus/types"
 	"github.com/line/ostracon/libs/bits"
@@ -16,8 +18,6 @@ import (
 	"github.com/line/ostracon/libs/log"
 	tmsync "github.com/line/ostracon/libs/sync"
 	"github.com/line/ostracon/p2p"
-	tmcons "github.com/line/ostracon/proto/ostracon/consensus"
-	tmproto "github.com/line/ostracon/proto/ostracon/types"
 	sm "github.com/line/ostracon/state"
 	"github.com/line/ostracon/types"
 	tmtime "github.com/line/ostracon/types/time"

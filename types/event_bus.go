@@ -4,7 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/line/ostracon/abci/types"
+	tmabci "github.com/tendermint/tendermint/abci/types"
+
 	"github.com/line/ostracon/libs/log"
 	tmpubsub "github.com/line/ostracon/libs/pubsub"
 	"github.com/line/ostracon/libs/service"
@@ -109,7 +110,7 @@ func (b *EventBus) Publish(eventType string, eventData OCEventData) error {
 // map of stringified events where each key is composed of the event
 // type and each of the event's attributes keys in the form of
 // "{event.Type}.{attribute.Key}" and the value is each attribute's value.
-func (b *EventBus) validateAndStringifyEvents(events []types.Event, logger log.Logger) map[string][]string {
+func (b *EventBus) validateAndStringifyEvents(events []tmabci.Event, logger log.Logger) map[string][]string {
 	result := make(map[string][]string)
 	for _, event := range events {
 		if len(event.Type) == 0 {

@@ -3,30 +3,32 @@ package ostracon.rpc.grpc;
 option  go_package = "github.com/line/ostracon/rpc/grpc;coregrpc";
 
 import "ostracon/abci/types.proto";
+import "tendermint/abci/types.proto";
+import "tendermint/rpc/grpc/types.proto";
 
 //----------------------------------------
 // Request types
 
-message RequestPing {}
+//message RequestPing {}
 
-message RequestBroadcastTx {
-  bytes tx = 1;
-}
+//message RequestBroadcastTx {
+//  bytes tx = 1;
+//}
 
 //----------------------------------------
 // Response types
 
-message ResponsePing {}
+//message ResponsePing {}
 
 message ResponseBroadcastTx {
   ostracon.abci.ResponseCheckTx   check_tx   = 1;
-  ostracon.abci.ResponseDeliverTx deliver_tx = 2;
+  tendermint.abci.ResponseDeliverTx deliver_tx = 2;
 }
 
 //----------------------------------------
 // Service Definition
 
 service BroadcastAPI {
-  rpc Ping(RequestPing) returns (ResponsePing);
-  rpc BroadcastTx(RequestBroadcastTx) returns (ResponseBroadcastTx);
+//  rpc Ping(tendermint.abci.RequestPing) returns (tendermint.abci.ResponsePing);
+  rpc BroadcastTx(tendermint.rpc.grpc.RequestBroadcastTx) returns (ResponseBroadcastTx);
 }

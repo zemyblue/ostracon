@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/line/ostracon/crypto/tmhash"
-	tmcrypto "github.com/line/ostracon/proto/ostracon/crypto"
+	tmcrypto "github.com/tendermint/tendermint/proto/tendermint/crypto"
 )
 
 const ProofOpValue = "simple:v"

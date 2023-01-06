@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"time"
 
+	tmabci "github.com/tendermint/tendermint/abci/types"
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
 
 	abci "github.com/line/ostracon/abci/types"
@@ -12,7 +14,6 @@ import (
 	"github.com/line/ostracon/crypto/ed25519"
 	tmrand "github.com/line/ostracon/libs/rand"
 	tmstate "github.com/line/ostracon/proto/ostracon/state"
-	tmproto "github.com/line/ostracon/proto/ostracon/types"
 	"github.com/line/ostracon/proxy"
 	sm "github.com/line/ostracon/state"
 	"github.com/line/ostracon/types"
@@ -175,7 +176,7 @@ func makeHeaderPartsResponsesValPubKeyChange(
 
 	block := makeBlock(state, state.LastBlockHeight+1)
 	abciResponses := &tmstate.ABCIResponses{
-		BeginBlock: &abci.ResponseBeginBlock{},
+		BeginBlock: &tmabci.ResponseBeginBlock{},
 		EndBlock:   &abci.ResponseEndBlock{ValidatorUpdates: nil},
 	}
 	// If the pubkey is new, remove the old and add the new.
@@ -199,7 +200,7 @@ func makeHeaderPartsResponsesValPowerChange(
 
 	block := makeBlock(state, state.LastBlockHeight+1)
 	abciResponses := &tmstate.ABCIResponses{
-		BeginBlock: &abci.ResponseBeginBlock{},
+		BeginBlock: &tmabci.ResponseBeginBlock{},
 		EndBlock:   &abci.ResponseEndBlock{ValidatorUpdates: nil},
 	}
 
@@ -223,7 +224,7 @@ func makeHeaderPartsResponsesParams(
 
 	block := makeBlock(state, state.LastBlockHeight+1)
 	abciResponses := &tmstate.ABCIResponses{
-		BeginBlock: &abci.ResponseBeginBlock{},
+		BeginBlock: &tmabci.ResponseBeginBlock{},
 		EndBlock:   &abci.ResponseEndBlock{ConsensusParamUpdates: types.OC2PB.ConsensusParams(&params)},
 	}
 	return block.Header, types.BlockID{Hash: block.Hash(), PartSetHeader: types.PartSetHeader{}}, abciResponses
@@ -259,40 +260,40 @@ type testApp struct {
 var _ abci.Application = (*testApp)(nil)
 var TestAppVersion uint64 = 66
 
-func (app *testApp) Info(req abci.RequestInfo) (resInfo abci.ResponseInfo) {
-	return abci.ResponseInfo{}
+func (app *testApp) Info(req tmabci.RequestInfo) (resInfo tmabci.ResponseInfo) {
+	return tmabci.ResponseInfo{}
 }
 
-func (app *testApp) BeginBlock(req abci.RequestBeginBlock) abci.ResponseBeginBlock {
+func (app *testApp) BeginBlock(req abci.RequestBeginBlock) tmabci.ResponseBeginBlock {
 	app.CommitVotes = req.LastCommitInfo.Votes
 	app.ByzantineValidators = req.ByzantineValidators
-	return abci.ResponseBeginBlock{}
+	return tmabci.ResponseBeginBlock{}
 }
 
-func (app *testApp) EndBlock(req abci.RequestEndBlock) abci.ResponseEndBlock {
+func (app *testApp) EndBlock(req tmabci.RequestEndBlock) abci.ResponseEndBlock {
 	return abci.ResponseEndBlock{
 		ValidatorUpdates: app.ValidatorUpdates,
-		ConsensusParamUpdates: &abci.ConsensusParams{
+		ConsensusParamUpdates: &tmabci.ConsensusParams{
 			Version: &tmproto.VersionParams{
 				AppVersion: TestAppVersion}}}
 }
 
-func (app *testApp) DeliverTx(req abci.RequestDeliverTx) abci.ResponseDeliverTx {
-	return abci.ResponseDeliverTx{Events: []abci.Event{}}
+func (app *testApp) DeliverTx(req tmabci.RequestDeliverTx) tmabci.ResponseDeliverTx {
+	return tmabci.ResponseDeliverTx{Events: []tmabci.Event{}}
 }
 
-func (app *testApp) CheckTxSync(req abci.RequestCheckTx) abci.ResponseCheckTx {
+func (app *testApp) CheckTxSync(req tmabci.RequestCheckTx) abci.ResponseCheckTx {
 	return abci.ResponseCheckTx{}
 }
 
-func (app *testApp) CheckTxAsync(req abci.RequestCheckTx, callback abci.CheckTxCallback) {
+func (app *testApp) CheckTxAsync(req tmabci.RequestCheckTx, callback abci.CheckTxCallback) {
 	callback(abci.ResponseCheckTx{})
 }
 
-func (app *testApp) Commit() abci.ResponseCommit {
-	return abci.ResponseCommit{RetainHeight: 1}
+func (app *testApp) Commit() tmabci.ResponseCommit {
+	return tmabci.ResponseCommit{RetainHeight: 1}
 }
 
-func (app *testApp) Query(reqQuery abci.RequestQuery) (resQuery abci.ResponseQuery) {
+func (app *testApp) Query(reqQuery tmabci.RequestQuery) (resQuery tmabci.ResponseQuery) {
 	return
 }

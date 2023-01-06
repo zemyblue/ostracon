@@ -7,8 +7,9 @@ import (
 
 	"context"
 
+	coregrpc "github.com/tendermint/tendermint/rpc/grpc"
+
 	tmjson "github.com/line/ostracon/libs/json"
-	coregrpc "github.com/line/ostracon/rpc/grpc"
 )
 
 var grpcAddr = "tcp://localhost:36656"

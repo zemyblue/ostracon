@@ -8,8 +8,8 @@ import (
 	"github.com/golang/protobuf/proto" // nolint: staticcheck // still used by gogoproto
 	"github.com/tendermint/go-amino"
 
-	"github.com/line/ostracon/proto/ostracon/version"
 	"github.com/line/ostracon/types/time"
+	"github.com/tendermint/tendermint/proto/tendermint/version"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

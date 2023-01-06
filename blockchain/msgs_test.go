@@ -9,7 +9,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	bcproto "github.com/line/ostracon/proto/ostracon/blockchain"
+	bcproto "github.com/tendermint/tendermint/proto/tendermint/blockchain"
+
+	obcproto "github.com/line/ostracon/proto/ostracon/blockchain"
 	sm "github.com/line/ostracon/state"
 	"github.com/line/ostracon/types"
 )
@@ -93,25 +95,25 @@ func TestBlockchainMessageVectors(t *testing.T) {
 		bmsg     proto.Message
 		expBytes string
 	}{
-		{"BlockRequestMessage", &bcproto.Message{Sum: &bcproto.Message_BlockRequest{
+		{"BlockRequestMessage", &obcproto.Message{Sum: &obcproto.Message_BlockRequest{
 			BlockRequest: &bcproto.BlockRequest{Height: 1}}}, "0a020801"},
-		{"BlockRequestMessage", &bcproto.Message{Sum: &bcproto.Message_BlockRequest{
+		{"BlockRequestMessage", &obcproto.Message{Sum: &obcproto.Message_BlockRequest{
 			BlockRequest: &bcproto.BlockRequest{Height: math.MaxInt64}}},
 			"0a0a08ffffffffffffffff7f"},
-		{"BlockResponseMessage", &bcproto.Message{Sum: &bcproto.Message_BlockResponse{
-			BlockResponse: &bcproto.BlockResponse{Block: bpb}}}, "1a720a700a5d0a04080b100b1803220b088092b8c398feffffff012a0212003a20c4da88e876062aa1543400d50d0eaa0dac88096057949cfb7bca7f3a48c04bf96a20e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855120d0a0b48656c6c6f20576f726c641a00"},
-		{"NoBlockResponseMessage", &bcproto.Message{Sum: &bcproto.Message_NoBlockResponse{
+		{"BlockResponseMessage", &obcproto.Message{Sum: &obcproto.Message_BlockResponse{
+			BlockResponse: &obcproto.BlockResponse{Block: bpb}}}, "1a720a700a5d0a04080b100b1803220b088092b8c398feffffff012a0212003a20c4da88e876062aa1543400d50d0eaa0dac88096057949cfb7bca7f3a48c04bf96a20e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855120d0a0b48656c6c6f20576f726c641a00"},
+		{"NoBlockResponseMessage", &obcproto.Message{Sum: &obcproto.Message_NoBlockResponse{
 			NoBlockResponse: &bcproto.NoBlockResponse{Height: 1}}}, "12020801"},
-		{"NoBlockResponseMessage", &bcproto.Message{Sum: &bcproto.Message_NoBlockResponse{
+		{"NoBlockResponseMessage", &obcproto.Message{Sum: &obcproto.Message_NoBlockResponse{
 			NoBlockResponse: &bcproto.NoBlockResponse{Height: math.MaxInt64}}},
 			"120a08ffffffffffffffff7f"},
-		{"StatusRequestMessage", &bcproto.Message{Sum: &bcproto.Message_StatusRequest{
+		{"StatusRequestMessage", &obcproto.Message{Sum: &obcproto.Message_StatusRequest{
 			StatusRequest: &bcproto.StatusRequest{}}},
 			"2200"},
-		{"StatusResponseMessage", &bcproto.Message{Sum: &bcproto.Message_StatusResponse{
+		{"StatusResponseMessage", &obcproto.Message{Sum: &obcproto.Message_StatusResponse{
 			StatusResponse: &bcproto.StatusResponse{Height: 1, Base: 2}}},
 			"2a0408011002"},
-		{"StatusResponseMessage", &bcproto.Message{Sum: &bcproto.Message_StatusResponse{
+		{"StatusResponseMessage", &obcproto.Message{Sum: &obcproto.Message_StatusResponse{
 			StatusResponse: &bcproto.StatusResponse{Height: math.MaxInt64, Base: math.MaxInt64}}},
 			"2a1408ffffffffffffffff7f10ffffffffffffffff7f"},
 	}

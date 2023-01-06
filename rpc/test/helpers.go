@@ -11,6 +11,8 @@ import (
 	abci "github.com/line/ostracon/abci/types"
 	"github.com/line/ostracon/libs/log"
 
+	core_grpc "github.com/tendermint/tendermint/rpc/grpc"
+
 	cfg "github.com/line/ostracon/config"
 	tmnet "github.com/line/ostracon/libs/net"
 	nm "github.com/line/ostracon/node"
@@ -18,7 +20,6 @@ import (
 	"github.com/line/ostracon/privval"
 	"github.com/line/ostracon/proxy"
 	ctypes "github.com/line/ostracon/rpc/core/types"
-	core_grpc "github.com/line/ostracon/rpc/grpc"
 	rpcclient "github.com/line/ostracon/rpc/jsonrpc/client"
 )
 

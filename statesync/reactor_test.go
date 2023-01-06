@@ -4,15 +4,17 @@ import (
 	"testing"
 	"time"
 
+	tmstate "github.com/tendermint/tendermint/proto/tendermint/state"
+	ssproto "github.com/tendermint/tendermint/proto/tendermint/statesync"
+
 	"github.com/line/ostracon/config"
 	"github.com/line/ostracon/libs/log"
-	tmstate "github.com/line/ostracon/proto/ostracon/state"
-	tmversion "github.com/line/ostracon/proto/ostracon/version"
 	"github.com/line/ostracon/proxy"
 	sm "github.com/line/ostracon/state"
 	"github.com/line/ostracon/statesync/mocks"
 	"github.com/line/ostracon/types"
 	"github.com/line/ostracon/version"
+	tmversion "github.com/tendermint/tendermint/proto/tendermint/version"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -21,7 +23,6 @@ import (
 	abci "github.com/line/ostracon/abci/types"
 	"github.com/line/ostracon/p2p"
 	p2pmocks "github.com/line/ostracon/p2p/mocks"
-	ssproto "github.com/line/ostracon/proto/ostracon/statesync"
 	proxymocks "github.com/line/ostracon/proxy/mocks"
 )
 

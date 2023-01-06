@@ -18,12 +18,12 @@ import (
 	"github.com/line/ostracon/crypto"
 	"github.com/line/ostracon/libs/log"
 	tmrand "github.com/line/ostracon/libs/rand"
-	tmstore "github.com/line/ostracon/proto/ostracon/store"
-	tmversion "github.com/line/ostracon/proto/ostracon/version"
 	sm "github.com/line/ostracon/state"
 	"github.com/line/ostracon/types"
 	tmtime "github.com/line/ostracon/types/time"
 	"github.com/line/ostracon/version"
+	tmstore "github.com/tendermint/tendermint/proto/tendermint/store"
+	tmversion "github.com/tendermint/tendermint/proto/tendermint/version"
 )
 
 // A cleanupFunc cleans up any config / test files created for a particular

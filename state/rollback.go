@@ -4,9 +4,10 @@ import (
 	"errors"
 	"fmt"
 
-	tmstate "github.com/line/ostracon/proto/ostracon/state"
-	tmversion "github.com/line/ostracon/proto/ostracon/version"
+	tmstate "github.com/tendermint/tendermint/proto/tendermint/state"
+
 	"github.com/line/ostracon/version"
+	tmversion "github.com/tendermint/tendermint/proto/tendermint/version"
 )
 
 // Rollback overwrites the current Ostracon state (height n) with the most

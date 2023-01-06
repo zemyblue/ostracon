@@ -16,6 +16,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+
 	"github.com/line/ostracon/abci/example/counter"
 	cstypes "github.com/line/ostracon/consensus/types"
 	"github.com/line/ostracon/crypto/tmhash"
@@ -24,7 +26,6 @@ import (
 	tmrand "github.com/line/ostracon/libs/rand"
 	mempl "github.com/line/ostracon/mempool"
 	p2pmock "github.com/line/ostracon/p2p/mock"
-	tmproto "github.com/line/ostracon/proto/ostracon/types"
 	"github.com/line/ostracon/types"
 )
 
