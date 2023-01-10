@@ -15,7 +15,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	abci "github.com/line/ostracon/abci/types"
+	ocabci "github.com/line/ostracon/abci/types"
 	"github.com/line/ostracon/crypto"
 	"github.com/line/ostracon/crypto/bls"
 	"github.com/line/ostracon/crypto/composite"
@@ -53,18 +53,18 @@ func TestABCIValidators(t *testing.T) {
 	tmVal := NewValidator(pkEd, 10)
 
 	abciVal := OC2PB.ValidatorUpdate(tmVal)
-	tmVals, err := PB2OC.ValidatorUpdates([]abci.ValidatorUpdate{abciVal})
+	tmVals, err := PB2OC.ValidatorUpdates([]ocabci.ValidatorUpdate{abciVal})
 	assert.Nil(t, err)
 	assert.Equal(t, tmValExpected, tmVals[0])
 
 	abciVals := OC2PB.ValidatorUpdates(NewValidatorSet(tmVals))
-	assert.Equal(t, []abci.ValidatorUpdate{abciVal}, abciVals)
+	assert.Equal(t, []ocabci.ValidatorUpdate{abciVal}, abciVals)
 
 	// val with address
 	tmVal.Address = pkEd.Address()
 
 	abciVal = OC2PB.ValidatorUpdate(tmVal)
-	tmVals, err = PB2OC.ValidatorUpdates([]abci.ValidatorUpdate{abciVal})
+	tmVals, err = PB2OC.ValidatorUpdates([]ocabci.ValidatorUpdate{abciVal})
 	assert.Nil(t, err)
 	assert.Equal(t, tmValExpected, tmVals[0])
 }
@@ -180,7 +180,7 @@ func TestABCIValidatorWithoutPubKey(t *testing.T) {
 	abciVal := OC2PB.Validator(NewValidator(pkEd, 10))
 
 	// pubkey must be nil
-	tmValExpected := abci.Validator{
+	tmValExpected := ocabci.Validator{
 		Address: pkEd.Address(),
 		Power:   10,
 	}

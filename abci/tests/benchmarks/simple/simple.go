@@ -7,7 +7,7 @@ import (
 	"log"
 	"reflect"
 
-	abci "github.com/line/ostracon/abci/types"
+	ocabci "github.com/line/ostracon/abci/types"
 	tmnet "github.com/line/ostracon/libs/net"
 )
 
@@ -21,7 +21,7 @@ func main() {
 	// Make a bunch of requests
 	counter := 0
 	for i := 0; ; i++ {
-		req := abci.ToRequestEcho("foobar")
+		req := ocabci.ToRequestEcho("foobar")
 		_, err := makeRequest(conn, req)
 		if err != nil {
 			log.Fatal(err.Error())
@@ -33,15 +33,15 @@ func main() {
 	}
 }
 
-func makeRequest(conn io.ReadWriter, req *abci.Request) (*abci.Response, error) {
+func makeRequest(conn io.ReadWriter, req *ocabci.Request) (*ocabci.Response, error) {
 	var bufWriter = bufio.NewWriter(conn)
 
 	// Write desired request
-	err := abci.WriteMessage(req, bufWriter)
+	err := ocabci.WriteMessage(req, bufWriter)
 	if err != nil {
 		return nil, err
 	}
-	err = abci.WriteMessage(abci.ToRequestFlush(), bufWriter)
+	err = ocabci.WriteMessage(ocabci.ToRequestFlush(), bufWriter)
 	if err != nil {
 		return nil, err
 	}
@@ -51,17 +51,17 @@ func makeRequest(conn io.ReadWriter, req *abci.Request) (*abci.Response, error) 
 	}
 
 	// Read desired response
-	var res = &abci.Response{}
-	err = abci.ReadMessage(conn, res)
+	var res = &ocabci.Response{}
+	err = ocabci.ReadMessage(conn, res)
 	if err != nil {
 		return nil, err
 	}
-	var resFlush = &abci.Response{}
-	err = abci.ReadMessage(conn, resFlush)
+	var resFlush = &ocabci.Response{}
+	err = ocabci.ReadMessage(conn, resFlush)
 	if err != nil {
 		return nil, err
 	}
-	if _, ok := resFlush.Value.(*abci.Response_Flush); !ok {
+	if _, ok := resFlush.Value.(*ocabci.Response_Flush); !ok {
 		return nil, fmt.Errorf("expected flush response but got something else: %v", reflect.TypeOf(resFlush))
 	}
 

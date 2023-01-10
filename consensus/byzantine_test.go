@@ -18,7 +18,7 @@ import (
 	config2 "github.com/line/ostracon/config"
 
 	abcicli "github.com/line/ostracon/abci/client"
-	abci "github.com/line/ostracon/abci/types"
+	ocabci "github.com/line/ostracon/abci/types"
 	"github.com/line/ostracon/evidence"
 	"github.com/line/ostracon/libs/log"
 	"github.com/line/ostracon/libs/service"
@@ -59,7 +59,7 @@ func TestByzantinePrevoteEquivocation(t *testing.T) {
 		ensureDir(path.Dir(thisConfig.Consensus.WalFile()), 0700) // dir for wal
 		app := appFunc()
 		vals := types.OC2PB.ValidatorUpdates(state.Validators)
-		app.InitChain(abci.RequestInitChain{Validators: vals})
+		app.InitChain(ocabci.RequestInitChain{Validators: vals})
 
 		blockDB := dbm.NewMemDB()
 		blockStore := store.NewBlockStore(blockDB)
